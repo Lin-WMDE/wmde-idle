@@ -160,6 +160,9 @@ impl State {
             output.fade_surface = None;
         }
 
+        if !self.conf.lock_on_screen_off {
+            return;
+        }
         let timer = timer::Timer::from_duration(LOCK_SCREEN_DELAY);
         self.loop_handle
             .insert_source(timer, |_, _, state| {

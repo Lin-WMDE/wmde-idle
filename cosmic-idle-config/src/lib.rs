@@ -9,6 +9,8 @@ pub struct CosmicIdleConfig {
     pub suspend_on_battery_time: Option<u32>,
     /// Suspend idle time when on ac, in ms
     pub suspend_on_ac_time: Option<u32>,
+    /// WMDE: lock the session once the screen has been turned off for inactivity
+    pub lock_on_screen_off: bool,
 }
 
 impl Default for CosmicIdleConfig {
@@ -17,6 +19,7 @@ impl Default for CosmicIdleConfig {
             screen_off_time: Some(15 * 60 * 1000),
             suspend_on_battery_time: Some(15 * 60 * 1000),
             suspend_on_ac_time: Some(30 * 60 * 1000),
+            lock_on_screen_off: true,
         }
     }
 }
