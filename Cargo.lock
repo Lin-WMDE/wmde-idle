@@ -300,7 +300,6 @@ dependencies = [
 [[package]]
 name = "build_helpers"
 version = "0.14.0"
-source = "git+https://github.com/pop-os/libcosmic#5a8bd9482a35ae94c1e54edf77b331c6b970f170"
 dependencies = [
  "cfg_aliases",
 ]
@@ -445,7 +444,6 @@ checksum = "773648b94d0e5d620f64f280777445740e61fe701025087ec8b57f45c791888b"
 [[package]]
 name = "cosmic-config"
 version = "1.0.0"
-source = "git+https://github.com/pop-os/libcosmic#5a8bd9482a35ae94c1e54edf77b331c6b970f170"
 dependencies = [
  "atomicwrites",
  "calloop",
@@ -463,30 +461,9 @@ dependencies = [
 [[package]]
 name = "cosmic-config-derive"
 version = "1.0.0"
-source = "git+https://github.com/pop-os/libcosmic#5a8bd9482a35ae94c1e54edf77b331c6b970f170"
 dependencies = [
  "quote",
  "syn 2.0.119",
-]
-
-[[package]]
-name = "cosmic-idle"
-version = "1.10.0"
-dependencies = [
- "calloop",
- "calloop-wayland-source",
- "cosmic-config",
- "cosmic-idle-config",
- "cosmic-settings-config",
- "env_logger",
- "futures-lite",
- "keyframe",
- "log",
- "upower_dbus",
- "wayland-client",
- "wayland-protocols",
- "wayland-protocols-wlr",
- "zbus",
 ]
 
 [[package]]
@@ -499,8 +476,7 @@ dependencies = [
 
 [[package]]
 name = "cosmic-settings-config"
-version = "1.9.0"
-source = "git+https://github.com/pop-os/cosmic-settings-daemon#30aecb52621a1e0b8dc1cf5ccaf0555736d6bec4"
+version = "1.10.0"
 dependencies = [
  "cosmic-config",
  "ron 0.11.0",
@@ -942,7 +918,6 @@ dependencies = [
 [[package]]
 name = "iced_core"
 version = "0.14.0"
-source = "git+https://github.com/pop-os/libcosmic#5a8bd9482a35ae94c1e54edf77b331c6b970f170"
 dependencies = [
  "bitflags 2.13.2",
  "build_helpers",
@@ -966,7 +941,6 @@ dependencies = [
 [[package]]
 name = "iced_futures"
 version = "0.14.0"
-source = "git+https://github.com/pop-os/libcosmic#5a8bd9482a35ae94c1e54edf77b331c6b970f170"
 dependencies = [
  "futures",
  "iced_core",
@@ -2123,7 +2097,6 @@ checksum = "c6f5d3c3b1bf09027a88a6bc961fc00497d651009560b5463668dc81b0fa87a8"
 [[package]]
 name = "upower_dbus"
 version = "0.3.2"
-source = "git+https://github.com/pop-os/dbus-settings-bindings#eed01dd3609e90e3c8cd043656734c500956c793"
 dependencies = [
  "serde",
  "serde_repr",
@@ -2677,6 +2650,26 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "23b97319f7b8343df12cc98938e5c3eb436064524c8d2b4e30a1d3a36eecdf81"
 dependencies = [
  "memchr",
+]
+
+[[package]]
+name = "wmde-idle"
+version = "1.10.0"
+dependencies = [
+ "calloop",
+ "calloop-wayland-source",
+ "cosmic-config",
+ "cosmic-idle-config",
+ "cosmic-settings-config",
+ "env_logger",
+ "futures-lite",
+ "keyframe",
+ "log",
+ "upower_dbus",
+ "wayland-client",
+ "wayland-protocols",
+ "wayland-protocols-wlr",
+ "zbus",
 ]
 
 [[package]]

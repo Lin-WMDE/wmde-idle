@@ -272,7 +272,7 @@ fn main() {
         )
         .unwrap();
 
-    let config = cosmic_config::Config::new("com.system76.CosmicIdle", 1).unwrap();
+    let config = cosmic_config::Config::new("fun.wmde.Idle", 1).unwrap();
     let conf = CosmicIdleConfig::get_entry(&config).unwrap_or_else(|(errs, conf)| {
         for err in errs {
             log::error!("Loading config: {}", err);

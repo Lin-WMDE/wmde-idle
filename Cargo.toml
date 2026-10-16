@@ -1,5 +1,5 @@
 [package]
-name = "cosmic-idle"
+name = "wmde-idle"
 version = "1.10.0"
 edition = "2024"
 
@@ -23,3 +23,32 @@ futures-lite = "2.6.1"
 members = [
     "cosmic-idle-config"
 ]
+
+# Build against the WMDE forks. Patched crates keep their upstream names and dirs; one
+# [patch] table per source (see CLAUDE.md).
+# libcosmic: config root cosmic -> wmde. cosmic-config pulls iced_futures through its
+# default subscription feature, so the iced crates it needs come from the fork as well.
+[patch."https://github.com/pop-os/libcosmic"]
+cosmic-config = { path = "../libcosmic/cosmic-config" }
+cosmic-config-derive = { path = "../libcosmic/cosmic-config-derive" }
+iced_core = { path = "../libcosmic/iced/core" }
+iced_futures = { path = "../libcosmic/iced/futures" }
+
+# System actions (LockScreen, Suspend) live under fun.wmde.Settings.Shortcuts.
+[patch."https://github.com/pop-os/cosmic-settings-daemon"]
+cosmic-settings-config = { path = "../wmde-settings-daemon/config" }
+
+[patch."https://github.com/pop-os/dbus-settings-bindings"]
+upower_dbus = { path = "../wmde-dbus-settings-bindings/upower" }
+
+# WMDE: shared release profile, see .doc/perf.
+#  - panic = "abort" drops .eh_frame and .gcc_except_table; catch_unwind stops catching,
+#    which in this stack only guards SVG parsing in iced's vector backends.
+#  - lto = "fat" with one codegen unit removes what monomorphisation duplicated.
+# The LTO half is expensive and single threaded; FAST=1 turns it off for development
+# builds without touching panic or opt-level, so behaviour still matches what ships.
+[profile.release]
+opt-level = 3
+lto = "fat"
+codegen-units = 1
+panic = "abort"

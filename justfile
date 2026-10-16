@@ -1,37 +1,25 @@
-name := 'cosmic-idle'
-export APPID := 'com.system76.CosmicIdle'
-
+name := 'wmde-idle'
 rootdir := ''
 prefix := '/usr'
+cargo-target-dir := env('CARGO_TARGET_DIR', 'target')
 
 base-dir := absolute_path(clean(rootdir / prefix))
-
-export INSTALL_DIR := base-dir / 'share'
-
-cargo-target-dir := env('CARGO_TARGET_DIR', 'target')
-bin-src := cargo-target-dir / 'release' / name
 bin-dst := base-dir / 'bin' / name
 
 # Default recipe which runs `just build-release`
+[private]
 default: build-release
-
-# Runs `cargo clean`
-clean:
-    cargo clean
-
-# `cargo clean` and removes vendored dependencies
-clean-dist: clean
-    rm -rf .cargo vendor vendor.tar
 
 # Compiles with debug profile
 build-debug *args:
-    cargo build --all {{args}}
+    cargo build {{args}}
 
 # Compiles with release profile
 build-release *args: (build-debug '--release' args)
 
-# Compiles release profile with vendored dependencies
-build-vendored *args: vendor-extract (build-release '--frozen --offline' args)
+# Runs `cargo clean`
+clean:
+    cargo clean
 
 # Runs a clippy check
 check *args:
@@ -40,31 +28,6 @@ check *args:
 # Runs a clippy check with JSON message format
 check-json: (check '--message-format=json')
 
-mock:
-    cargo build --release --example server
-    cosmic-comp {{cargo-target-dir}}/release/examples/server
-
-# Run with debug logs
-run *args:
-    env RUST_LOG=debug RUST_BACKTRACE=full cargo run --release {{args}}
-
+# Installs files
 install:
-    install -Dm0755 {{bin-src}} {{bin-dst}}
-
-# Uninstalls installed files
-uninstall:
-    rm {{bin-dst}}
-
-# Vendor dependencies locally
-vendor:
-    mkdir -p .cargo
-    cargo vendor --sync Cargo.toml \
-        | head -n -1 > .cargo/config
-    echo 'directory = "vendor"' >> .cargo/config
-    tar pcf vendor.tar vendor
-    rm -rf vendor
-
-# Extracts vendored dependencies
-vendor-extract:
-    rm -rf vendor
-    tar pxf vendor.tar
+    install -Dm0755 {{ cargo-target-dir / 'release' / name }} {{bin-dst}}
